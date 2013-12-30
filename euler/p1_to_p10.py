@@ -1,43 +1,23 @@
-from __future__ import division
-from time import time
+from __future__ import division, unicode_literals
+
 import math
 import operator
-import functools
 
-
-def timeit(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        t0 = time()
-        result = func(*args, **kwargs)
-        t1 = time()
-        return result, "which took {} s".format(t1-t0)
-    return wrapper
-
-
-# helper
-def is_prime(num):
-    """Returns True if num is a prime number."""
-    return all(num % x for x in xrange(2, num))
+from helpers import is_prime
 
 
 def multiples_of_3_and_5(threshold=1000):
     """P1. Find the sum of multiples of 3 or 5 up to a threshold."""
-    tot = 0
-    for i in xrange(1, threshold):
-        if i % 3 == 0 or i % 5 == 0:
-            tot += i
-
-    return tot
+    return sum(i for i in xrange(1, threshold) if i % 3 == 0 or i % 5 == 0)
 
 
 def even_fibonacci_numbers(threshold=4000000):
     """P2. Finds sum of even valued fibonacci numbers."""
-    def make_fib_list(threshold):
+    def make_fib_list(thresh):
         fibs = [1, 2]
         x = sum(fibs)
         i = len(fibs)
-        while x <= threshold:
+        while x <= thresh:
             fibs.append(x)
             # advance to next fib number
             i += 1
@@ -51,8 +31,7 @@ def even_fibonacci_numbers(threshold=4000000):
 
 def largest_prime_factor(n=600851475143):
     """P3. Finds the largest prime factor of n."""
-    # def is_prime(num):
-    #     return all(num % x for x in xrange(2, num))
+    # TODO: investigate if this can be calculated quicker
     for i in xrange(2, n):
         if n % i == 0:
             # now take its larger factor pair, where i * j = n
@@ -60,21 +39,13 @@ def largest_prime_factor(n=600851475143):
             if is_prime(j):
                 return j
 
-    # #for i in xrange(n-1, 1, -1):
-    # for i in reversed(xrange(2, n)):
-    #     if n % i == 0:
-    #         if is_prime(i):
-    #             return i
-    # else:
-    #     return "No prime factors exist!"
-
 
 def largest_palindrome_product(digits=3):
     """
-    P4. Finds the largest palindrome made from the product of two x-digit nums.
+    P4. Finds the largest palindrome made from product of two x-digit nums.
     """
     def is_palindrome_int(n):
-        """Returns True if an int is a palindrome."""
+        """Returns True if n (an int) is a palindrome."""
         s = str(n)
         return s == s[::-1]
 
@@ -113,11 +84,11 @@ def smallest_multiple(n=20):
         """Finds the necessary numbers we need to check in a sequence."""
         # NOTE: This turns out to just be the first half of the reversed list
         l = range(num, 0, -1)
-        cutoff = int(math.ceil(len(l)/2))
-        return l[:cutoff]
+        cutoff = math.ceil(len(l)/2)
+        return l[:int(cutoff)]
 
     def reduce_to_primes(l):
-        """Returns a list of only prime factors from l (dupes allowed)."""
+        """Returns a list of only prime factors from l (yes dupes allowed)."""
         factors = []
         for i in l:
             pf = get_prime_factors(i)
@@ -131,22 +102,33 @@ def smallest_multiple(n=20):
     primes = reduce_to_primes(seq)
     return reduce(operator.mul, primes)
 
-    # x, start, last_smallest_multiple = 2, 2, 2
-    # for i in xrange(start, n+1):
-    #     l = find_list_to_check(i)
-    #     #x = i
-    #     while not is_evenly_divisible(x, l):
-    #         x *= i
-    #     else:
-    #         last_smallest_multiple = x
-    #
-    # return last_smallest_multiple
+
+def sum_square_difference(c=100):
+    """
+    P6. Finds the difference between the sum of squares the first c numbers and
+    the square of the sum.
+    """
+    def sum_of_squares(x):
+        """Computes the sum of the squares for the first x natural numbers."""
+        squares = []
+        [squares.append(i**2) for i in xrange(1, x+1)]
+        return sum(e for e in squares)
+
+    def square_of_sum(x):
+        """Computes the square of the sum of the first x natural numbers."""
+        sums = sum(i for i in xrange(1, x+1))
+        return sums**2
+
+    sum_part = sum_of_squares(c)
+    square_part = square_of_sum(c)
+    return square_part - sum_part
 
 
 if __name__ == '__main__':
     # print multiples_of_3_and_5(1000)
     # print even_fibonacci_numbers(4000000)
-    # print largest_prime_factor(9213195)
-    # print largest_prime_factor(92130)
+    # print largest_prime_factor()
     # print largest_palindrome_product(3)
-    print smallest_multiple(56)
+    # print smallest_multiple(20)
+    print sum_square_difference(100)
+    pass
