@@ -4,7 +4,7 @@ from time import time
 import functools
 
 
-def timeit(func):
+def clockit(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         t0 = time()

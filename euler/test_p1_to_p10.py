@@ -41,3 +41,7 @@ def test_prime_10001st():
 
 def test_largest_product_in_series():
     assert largest_product_in_series(x=5) == 40824
+
+
+def test_special_pythagorean_triplet():
+    assert special_pythagorean_triplet(1000) == 31875000

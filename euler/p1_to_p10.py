@@ -3,7 +3,7 @@ from __future__ import division, unicode_literals
 import math
 import operator
 
-from helpers import is_prime, is_prime_check_known, timeit
+from helpers import is_prime, is_prime_check_known, clockit
 
 
 def multiples_of_3_and_5(threshold=1000):
@@ -187,6 +187,17 @@ def largest_product_in_series(x=5, series=None):
         return largest_prod
 
 
+def special_pythagorean_triplet(val=1000):
+    """P9. Finds the product of a Pythagorean triplet where a + b + c = val."""
+    for a in xrange(1, val):
+        for b in xrange(a + 1, val):
+            for c in xrange(b + 1, val):
+                if a + b + c == val:
+                    if a**2 + b**2 == c**2:
+                        # print "Found it! a={} b={} c={}".format(a, b, c)
+                        return a * b * c
+
+
 if __name__ == '__main__':
     # print multiples_of_3_and_5(1000)
     # print even_fibonacci_numbers(4000000)
@@ -195,5 +206,6 @@ if __name__ == '__main__':
     # print smallest_multiple(20)
     # print sum_square_difference(100)
     # print prime_10001st(10001)
-    print largest_product_in_series()
+    # print largest_product_in_series()
+    print special_pythagorean_triplet()
     pass
