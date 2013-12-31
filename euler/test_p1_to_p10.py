@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from conftest import slow
 from p1_to_p10 import *
 
 
@@ -13,9 +14,9 @@ def test_even_fibonacci_numbers():
     assert even_fibonacci_numbers(threshold=4000000) == 4613732
 
 
+@slow
 def test_largest_prime_factor():
     assert largest_prime_factor(13195) == 29
-    # this takes several seconds, so commenting for now
     assert largest_prime_factor(600851475143) == 6857
 
 
@@ -34,6 +35,7 @@ def test_sum_square_difference():
     assert sum_square_difference(100) == 25164150
 
 
+@slow
 def test_prime_10001st():
     assert prime_10001st(6) == 13
     assert prime_10001st(10001) == 104743
