@@ -3,7 +3,7 @@ from __future__ import division, unicode_literals
 import math
 import operator
 
-from helpers import is_prime
+from helpers import is_prime, is_prime_check_known, timeit
 
 
 def multiples_of_3_and_5(threshold=1000):
@@ -31,12 +31,27 @@ def even_fibonacci_numbers(threshold=4000000):
 
 def largest_prime_factor(n=600851475143):
     """P3. Finds the largest prime factor of n."""
-    # TODO: investigate if this can be calculated quicker
     for i in xrange(2, n):
         if n % i == 0:
             # now take its larger factor pair, where i * j = n
             j = int(n / i)
             if is_prime(j):
+                return j
+
+
+def alt_largest_prime_factor(n=600851475143):
+    def get_primes(upto=n):
+        primes = []
+        for i in xrange(2, upto):
+            if is_prime(i):
+                primes.append(i)
+        return primes
+
+    primes = get_primes(n)
+    for i in xrange(2, n):
+        if n % i == 0:
+            j = int(n / i)
+            if is_prime_check_known(j, primes):
                 return j
 
 
@@ -124,11 +139,61 @@ def sum_square_difference(c=100):
     return square_part - sum_part
 
 
+def prime_10001st(x=10001):
+    """P7. Finds the xth prime number."""
+    i = 1
+    primes = []
+    while len(primes) < x:
+        i += 1
+        if is_prime_check_known(i, primes):
+            primes.append(i)
+    else:
+        return i
+
+
+def largest_product_in_series(x=5, series=None):
+    """P8. Finds the greatest product of x consecutive digits in a series."""
+    if not series:
+        series = (
+            '73167176531330624919225119674426574742355349194934'
+            '96983520312774506326239578318016984801869478851843'
+            '85861560789112949495459501737958331952853208805511'
+            '12540698747158523863050715693290963295227443043557'
+            '66896648950445244523161731856403098711121722383113'
+            '62229893423380308135336276614282806444486645238749'
+            '30358907296290491560440772390713810515859307960866'
+            '70172427121883998797908792274921901699720888093776'
+            '65727333001053367881220235421809751254540594752243'
+            '52584907711670556013604839586446706324415722155397'
+            '53697817977846174064955149290862569321978468622482'
+            '83972241375657056057490261407972968652414535100474'
+            '82166370484403199890008895243450658541227588666881'
+            '16427171479924442928230863465674813919123162824586'
+            '17866458359124566529476545682848912883142607690042'
+            '24219022671055626321111109370544217506941658960408'
+            '07198403850962455444362981230987879927244284909188'
+            '84580156166097919133875499200524063689912560717606'
+            '05886116467109405077541002256983155200055935729725'
+            '71636269561882670428252483600823257530420752963450')
+
+    i, largest_prod = 0, 0
+    while i < len(series):
+        chunk = series[i:i+x]
+        prod = reduce(operator.mul, map(int, chunk))
+        if prod > largest_prod:
+            largest_prod = prod
+        i += 1
+    else:
+        return largest_prod
+
+
 if __name__ == '__main__':
     # print multiples_of_3_and_5(1000)
     # print even_fibonacci_numbers(4000000)
     # print largest_prime_factor()
     # print largest_palindrome_product(3)
     # print smallest_multiple(20)
-    print sum_square_difference(100)
+    # print sum_square_difference(100)
+    # print prime_10001st(10001)
+    print largest_product_in_series()
     pass

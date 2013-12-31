@@ -10,10 +10,28 @@ def timeit(func):
         t0 = time()
         result = func(*args, **kwargs)
         t1 = time()
-        return result, "which took {} s".format(t1-t0)
+        return result, "This took {} s".format(t1-t0)
     return wrapper
+
+
+# def is_prime(n):
+#     """Returns True if n is a prime number."""
+#     return all(n % i for i in xrange(2, n))
 
 
 def is_prime(n):
     """Returns True if n is a prime number."""
-    return all(n % i for i in xrange(2, n))
+    for i in xrange(2, n):
+        if n % i == 0:
+            return False
+    else:
+        return True
+
+
+def is_prime_check_known(n, known_primes):
+    """Returns True if n is a prime. Checks only in provided seq."""
+    for j in known_primes:
+        if n % j == 0:
+            return False
+    else:
+        return True

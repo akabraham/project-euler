@@ -15,7 +15,8 @@ def test_even_fibonacci_numbers():
 
 def test_largest_prime_factor():
     assert largest_prime_factor(13195) == 29
-    # assert largest_prime_factor(600851475143) == 6857
+    # this takes several seconds, so commenting for now
+    assert largest_prime_factor(600851475143) == 6857
 
 
 def test_largest_palindrome_product():
@@ -31,3 +32,12 @@ def test_smallest_multiple():
 def test_sum_square_difference():
     assert sum_square_difference(10) == 2640
     assert sum_square_difference(100) == 25164150
+
+
+def test_prime_10001st():
+    assert prime_10001st(6) == 13
+    assert prime_10001st(10001) == 104743
+
+
+def test_largest_product_in_series():
+    assert largest_product_in_series(x=5) == 40824
