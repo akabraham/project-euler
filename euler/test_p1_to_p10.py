@@ -47,3 +47,9 @@ def test_largest_product_in_series():
 
 def test_special_pythagorean_triplet():
     assert special_pythagorean_triplet(1000) == 31875000
+
+
+@slow
+def test_summation_of_primes():
+    assert summation_of_primes(10) == 17
+    # assert summation_of_primes(2000000) == 142913828922

@@ -5,6 +5,9 @@ import operator
 
 from helpers import is_prime, is_prime_check_known, clockit
 
+# for unknown range ceilings
+HUGE_CEIL = 999999999999999
+
 
 def multiples_of_3_and_5(threshold=1000):
     """P1. Find the sum of multiples of 3 or 5 up to a threshold."""
@@ -89,6 +92,8 @@ def smallest_multiple(n=20):
     def get_prime_factors(num):
         """Returns the prime factors for num."""
         pf = []
+        # if num % 2 == 0:
+        #     pf.append(2)
         for i in xrange(2, num):
             if num % i == 0:
                 if is_prime(i):
@@ -141,14 +146,14 @@ def sum_square_difference(c=100):
 
 def prime_10001st(x=10001):
     """P7. Finds the xth prime number."""
-    i = 1
-    primes = []
-    while len(primes) < x:
-        i += 1
+    primes = [2]
+    for i in xrange(3, HUGE_CEIL, 2):
         if is_prime_check_known(i, primes):
             primes.append(i)
-    else:
-        return i
+            if len(primes) == x:
+                break
+
+    return primes[-1]
 
 
 def largest_product_in_series(x=5, series=None):
@@ -198,6 +203,25 @@ def special_pythagorean_triplet(val=1000):
                         return a * b * c
 
 
+def get_prime_list(ceil):
+    """Returns a list of primes less than ceil."""
+    # NOTE: in real life, it would be far more efficient to import a list of
+    # primes once you get above 100,000 or so
+    primes = []
+    for i in xrange(2, ceil):
+        if is_prime_check_known(i, primes):
+            primes.append(i)
+
+    return primes
+
+
+@clockit
+def summation_of_primes(ceil=2000000):
+    """P10. Finds the sum of all primes below ceil."""
+    primes = get_prime_list(ceil)
+    return sum(p for p in primes)
+
+
 if __name__ == '__main__':
     # print multiples_of_3_and_5(1000)
     # print even_fibonacci_numbers(4000000)
@@ -207,5 +231,6 @@ if __name__ == '__main__':
     # print sum_square_difference(100)
     # print prime_10001st(10001)
     # print largest_product_in_series()
-    print special_pythagorean_triplet()
+    # print special_pythagorean_triplet()
+    print summation_of_primes(2000000)
     pass
