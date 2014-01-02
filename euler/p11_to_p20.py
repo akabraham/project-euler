@@ -65,49 +65,7 @@ def largest_product_in_grid(c=4, grid=None):
                get_max_prod(ldiag))
 
 
-@clockit
 def highly_divisible_triangular_number(divisors=500):
-    """
-    P12. Finds the value of the first triangle number to have over x divisors.
-
-    A triangle number n is the sum of all digits preceding it 1-to-n.
-    Like a factorial with sums instead of multiplication.
-    """
-    n = 0
-    for i in xrange(1, HUGE_CEIL):
-        n += i
-        factors = []
-        for j in xrange(1, int(sqrt(n))+1):
-            if n % j == 0:
-                factors.extend([j, n//j])
-
-        if len(set(factors)) > divisors:
-            return n
-
-
-@clockit
-def highly_divisible_triangular_number1a(divisors=500):
-    """
-    P12. Finds the value of the first triangle number to have over x divisors.
-
-    A triangle number n is the sum of all digits preceding it 1-to-n.
-    Like a factorial with sums instead of multiplication.
-    """
-    n = 0
-    for i in xrange(1, HUGE_CEIL):
-        n += i
-        factors = set()
-        for j in xrange(1, int(sqrt(n))+1):
-            if n % j == 0:
-                factors.add(j)
-                factors.add(n//j)
-
-        if len(factors) > divisors:
-            return n
-
-
-@clockit
-def highly_divisible_triangular_number3(divisors=500):
     """
     P12. Finds the value of the first triangle number to have over x divisors.
 
@@ -120,7 +78,7 @@ def highly_divisible_triangular_number3(divisors=500):
         i += 1
         tn += i
         factors.clear()
-        for j in xrange(1, int(sqrt(tn))+1):
+        for j in xrange(1, int(sqrt(tn)) + 1):
             if tn % j == 0:
                 factors.add(j)
                 factors.add(tn//j)
@@ -128,102 +86,7 @@ def highly_divisible_triangular_number3(divisors=500):
         return tn
 
 
-@clockit
-def highly_divisible_triangular_number1b(divisors=500):
-    """
-    P12. Finds the value of the first triangle number to have over x divisors.
-
-    A triangle number n is the sum of all digits preceding it 1-to-n.
-    Like a factorial with sums instead of multiplication.
-    """
-    n = 0
-    for i in xrange(1, HUGE_CEIL):
-        n += i
-        factors = set()
-        for j in xrange(1, int(sqrt(n))+1):
-            if n % j == 0:
-                factors.update((j, n//j))
-
-        if len(factors) > divisors:
-            return n
-
-
-@clockit
-def highly_divisible_triangular_number2(divisors=500):
-    """
-    P12. Finds the value of the first triangle number to have over x divisors.
-
-    A triangle number n is the sum of all digits preceding it 1-to-n.
-    Like a factorial with sums instead of multiplication.
-    """
-    def get_factors2(n):
-        return set(reduce(operator.__iadd__,
-                   ([i, n//i] for i in xrange(1, int(sqrt(n))+1)
-                    if n % i == 0)))
-
-    triangle = 0
-    for n in xrange(1, HUGE_CEIL):
-        triangle += n
-        factors = get_factors2(triangle)
-
-        if len(factors) > divisors:
-            return triangle
-
-
-@clockit
-def highly_divisible_triangular_number2a(divisors=500):
-    """
-    P12. Finds the value of the first triangle number to have over x divisors.
-
-    A triangle number n is the sum of all digits preceding it 1-to-n.
-    Like a factorial with sums instead of multiplication.
-    """
-    def get_factors2a(n):
-        return set(reduce(list.__iadd__,
-                   ([i, n//i] for i in xrange(1, int(sqrt(n))+1)
-                    if n % i == 0)))
-
-    triangle = 0
-    for n in xrange(1, HUGE_CEIL):
-        triangle += n
-        factors = get_factors2a(triangle)
-
-        if len(factors) > divisors:
-            return triangle
-
-
-def get_factors(n):
-    return set(reduce(list.__iadd__,
-               ([i, n//i] for i in xrange(1, int(sqrt(n))+1)
-                if n % i == 0)))
-
-
-# def get_factors_set(n):
-#     return reduce(set.__iand__,
-
-
 if __name__ == '__main__':
     # print largest_product_in_grid(c=4)
-    # print highly_divisible_triangular_number(10)
-    # print highly_divisible_triangular_number(20)
-    # print highly_divisible_triangular_number(40)
-    # print highly_divisible_triangular_number(80)
-    # print highly_divisible_triangular_number(160)
-    # print highly_divisible_triangular_number(320)
-    # print highly_divisible_triangular_number(500)
-    # print
-    print highly_divisible_triangular_number1a(10)
-    print highly_divisible_triangular_number1a(20)
-    print highly_divisible_triangular_number1a(40)
-    print highly_divisible_triangular_number1a(80)
-    print highly_divisible_triangular_number1a(160)
-    print highly_divisible_triangular_number1a(320)
-    print highly_divisible_triangular_number1a(500)
-    print
-    print highly_divisible_triangular_number3(10)
-    print highly_divisible_triangular_number3(20)
-    print highly_divisible_triangular_number3(40)
-    print highly_divisible_triangular_number3(80)
-    print highly_divisible_triangular_number3(160)
-    print highly_divisible_triangular_number3(320)
-    print highly_divisible_triangular_number3(500)
+    print highly_divisible_triangular_number(500)
+    pass
