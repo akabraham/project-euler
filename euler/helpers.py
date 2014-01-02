@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from math import sqrt
 from time import time
 import functools
 
@@ -10,7 +11,8 @@ def clockit(func):
         t0 = time()
         result = func(*args, **kwargs)
         t1 = time()
-        return result, "This took {} s".format(t1-t0)
+        return result, "{} (args={}, kwargs={}) took {} s".format(
+            func.__name__, str(*args), str(**kwargs), t1-t0)
     return wrapper
 
 
@@ -20,8 +22,7 @@ def clockit(func):
 
 
 def is_prime(n):
-    """Returns True if n is a prime number."""
-    for i in xrange(2, n):
+    for i in xrange(2, int(sqrt(n))+1):
         if n % i == 0:
             return False
     else:

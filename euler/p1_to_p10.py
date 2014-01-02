@@ -5,9 +5,6 @@ import operator
 
 from helpers import is_prime, is_prime_check_known, clockit
 
-# for unknown range ceilings
-HUGE_CEIL = 999999999999999
-
 
 def multiples_of_3_and_5(threshold=1000):
     """P1. Find the sum of multiples of 3 or 5 up to a threshold."""
@@ -17,44 +14,26 @@ def multiples_of_3_and_5(threshold=1000):
 def even_fibonacci_numbers(threshold=4000000):
     """P2. Finds sum of even valued fibonacci numbers."""
     def make_fib_list(thresh):
-        fibs = [1, 2]
-        x = sum(fibs)
-        i = len(fibs)
+        fibs = [1]
+        i, x = 1, 2
         while x <= thresh:
             fibs.append(x)
-            # advance to next fib number
             i += 1
             x = fibs[i-2] + fibs[i-1]
         else:
             return fibs
 
-    fibs = make_fib_list(threshold)
-    return sum(x for x in fibs if x % 2 == 0)
+    fib_list = make_fib_list(threshold)
+    return sum(e for e in fib_list if e % 2 == 0)
 
 
 def largest_prime_factor(n=600851475143):
     """P3. Finds the largest prime factor of n."""
-    for i in xrange(2, n):
+    for i in xrange(1, n, 2):
         if n % i == 0:
-            # now take its larger factor pair, where i * j = n
-            j = int(n / i)
+            # use its larger factor pair
+            j = n // i
             if is_prime(j):
-                return j
-
-
-def alt_largest_prime_factor(n=600851475143):
-    def get_primes(upto=n):
-        primes = []
-        for i in xrange(2, upto):
-            if is_prime(i):
-                primes.append(i)
-        return primes
-
-    primes = get_primes(n)
-    for i in xrange(2, n):
-        if n % i == 0:
-            j = int(n / i)
-            if is_prime_check_known(j, primes):
                 return j
 
 
@@ -146,14 +125,14 @@ def sum_square_difference(c=100):
 
 def prime_10001st(x=10001):
     """P7. Finds the xth prime number."""
+    i = 3
     primes = [2]
-    for i in xrange(3, HUGE_CEIL, 2):
+    while len(primes) < x:
+        i += 2
         if is_prime_check_known(i, primes):
             primes.append(i)
-            if len(primes) == x:
-                break
-
-    return primes[-1]
+    else:
+        return primes[-1]
 
 
 def largest_product_in_series(x=5, series=None):
@@ -203,23 +182,20 @@ def special_pythagorean_triplet(val=1000):
                         return a * b * c
 
 
-def get_prime_list(ceil):
-    """Returns a list of primes less than ceil."""
-    # NOTE: in real life, it would be far more efficient to import a list of
-    # primes once you get above 100,000 or so
-    primes = []
-    for i in xrange(2, ceil):
-        if is_prime_check_known(i, primes):
-            primes.append(i)
-
-    return primes
-
-
-@clockit
 def summation_of_primes(ceil=2000000):
     """P10. Finds the sum of all primes below ceil."""
+    def get_prime_list(c):
+        """Returns a list of primes less than ceil."""
+        # NOTE: in real life, it would be far more efficient to import a list of
+        # primes once you get above ~100,000
+        p = [2]
+        for i in xrange(3, c, 2):
+            if is_prime_check_known(i, p):
+                p.append(i)
+        return p
+
     primes = get_prime_list(ceil)
-    return sum(p for p in primes)
+    return sum(primes)
 
 
 if __name__ == '__main__':
