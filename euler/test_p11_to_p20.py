@@ -8,3 +8,7 @@ def test_largest_product_in_grid():
 def test_highly_divisible_triangular_number():
     assert highly_divisible_triangular_number(divisors=5) == 28
     assert highly_divisible_triangular_number(divisors=500) == 76576500
+
+
+def test_large_sum():
+    assert large_sum(digits=10) == 5537376230
