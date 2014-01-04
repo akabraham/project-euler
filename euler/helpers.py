@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
+import functools
 from math import sqrt
 from time import time
-import functools
 
 
 def clockit(func):
@@ -11,8 +11,8 @@ def clockit(func):
         t0 = time()
         result = func(*args, **kwargs)
         t1 = time()
-        return result, "{} (args={}, kwargs={}) took {} s".format(
-            func.__name__, str(*args), str(**kwargs), t1-t0)
+        return result, "{} --args={} --kwargs={} took {} s".format(
+            func.__name__, str(args), str(kwargs), t1-t0)
     return wrapper
 
 
