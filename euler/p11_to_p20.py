@@ -250,10 +250,16 @@ def lattice_paths(n):
     return get_entry_from_pascals_triangle(2*n, n)
 
 
+def power_digit_sum(x=1000):
+    """Finds the sum of the digits of the number 2**x."""
+    return sum(int(e) for e in str(2**x))
+
+
 if __name__ == '__main__':
     # print largest_product_in_grid(c=4)
     # print highly_divisible_triangular_number(500)
     # print large_sum(10)
     # print longest_collatz_sequence(ceil=1000000)
     # print lattice_paths(20)
+    print power_digit_sum(x=1000)
     pass

@@ -26,3 +26,8 @@ def test_longest_collatz_sequence():
 def test_lattice_paths():
     assert lattice_paths(2) == 6
     assert lattice_paths(20) == 137846528820
+
+
+def test_power_digit_sum():
+    assert power_digit_sum(x=15) == 26
+    assert power_digit_sum(x=1000) == 1366
