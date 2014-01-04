@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 import operator
 from collections import namedtuple
-from math import sqrt
+from math import sqrt, factorial
 
 from helpers import clockit
 
@@ -231,9 +231,29 @@ def longest_collatz_sequence(ceil=1000000):
     return longest.start
 
 
+def lattice_paths(n):
+    """
+    P15. Returns the number of possible routes in a NxN grid. You go from the
+    top left to the bottom right of the grid and you can only go right and down.
+
+    NOTE: I've discovered that the answer is always the middle digit of row 2*n
+    in Pascal's triangle! Will use that fact to get answer.
+    """
+    def get_entry_from_pascals_triangle(i, j):
+        """
+        Finds a value x in pascal's triangle using the formula:
+            x = i! / (j! * (i-j)!)
+        where i is the row number, j is the col number
+        """
+        return factorial(i) // (factorial(j) * factorial(i-j))
+
+    return get_entry_from_pascals_triangle(2*n, n)
+
+
 if __name__ == '__main__':
     # print largest_product_in_grid(c=4)
     # print highly_divisible_triangular_number(500)
     # print large_sum(10)
-    print longest_collatz_sequence(ceil=1000000)
+    # print longest_collatz_sequence(ceil=1000000)
+    # print lattice_paths(20)
     pass
