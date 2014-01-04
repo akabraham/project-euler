@@ -1,6 +1,13 @@
-import operator
+"""
+Project Euler solutions for p11 to p20.
+author: akabraham
+"""
+from __future__ import unicode_literals
 
+import operator
+from collections import namedtuple
 from math import sqrt
+
 from helpers import clockit
 
 
@@ -195,8 +202,38 @@ def large_sum(digits=10, number_list=None):
     return int(str(total)[:digits])
 
 
+def longest_collatz_sequence(ceil=1000000):
+    """
+    P14. Finds the starting number below ceil which produces the longest chain.
+    """
+    SeqRecord = namedtuple('SeqRecord', ['length', 'start'])
+
+    def do_sequence(x, seq=None):
+        if not seq:
+            seq = [x]
+
+        if x == 1:
+            return SeqRecord(len(seq), seq[0])
+        elif x % 2 == 0:
+            nxt = x // 2
+        else:
+            nxt = 3 * x + 1
+
+        seq.append(nxt)
+        return do_sequence(nxt, seq)
+
+    longest = SeqRecord(0, 0)
+    for i in reversed(xrange(1, ceil)):
+        candidate = do_sequence(i)
+        if candidate.length > longest.length:
+            longest = candidate
+
+    return longest.start
+
+
 if __name__ == '__main__':
     # print largest_product_in_grid(c=4)
     # print highly_divisible_triangular_number(500)
-    print large_sum(10)
+    # print large_sum(10)
+    print longest_collatz_sequence(ceil=1000000)
     pass

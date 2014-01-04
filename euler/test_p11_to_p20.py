@@ -1,3 +1,6 @@
+from __future__ import unicode_literals
+
+from conftest import slow
 from p11_to_p20 import *
 
 
@@ -12,3 +15,8 @@ def test_highly_divisible_triangular_number():
 
 def test_large_sum():
     assert large_sum(digits=10) == 5537376230
+
+
+@slow
+def test_longest_collatz_sequence():
+    assert longest_collatz_sequence(ceil=1000000) == 837799
