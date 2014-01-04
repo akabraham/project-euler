@@ -1,3 +1,7 @@
+"""
+Project Euler solutions for p1 to p10.
+author: akabraham
+"""
 from __future__ import division, unicode_literals
 
 import math
