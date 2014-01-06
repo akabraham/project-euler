@@ -31,3 +31,8 @@ def test_lattice_paths():
 def test_power_digit_sum():
     assert power_digit_sum(x=15) == 26
     assert power_digit_sum(x=1000) == 1366
+
+
+def test_number_letter_counts():
+    assert number_letter_counts(5) == 19
+    assert number_letter_counts(1000) == 21120

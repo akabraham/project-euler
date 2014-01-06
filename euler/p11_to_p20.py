@@ -251,8 +251,83 @@ def lattice_paths(n):
 
 
 def power_digit_sum(x=1000):
-    """Finds the sum of the digits of the number 2**x."""
+    """P16. Finds the sum of the digits of the number 2**x."""
     return sum(int(e) for e in str(2**x))
+
+
+def number_letter_counts(end=1000):
+    """
+    P17. Finds the total number of letters from 1 to end (inclusive) if the
+    numbers are written out in English. "and"'s are counted.
+    """
+    # mappings
+    dict_1x = {
+        1: 'one',
+        2: 'two',
+        3: 'three',
+        4: 'four',
+        5: 'five',
+        6: 'six',
+        7: 'seven',
+        8: 'eight',
+        9: 'nine'
+    }
+    dict_11_to_19 = {
+        10: 'ten',
+        11: 'eleven',
+        12: 'twelve',
+        13: 'thirteen',
+        14: 'fourteen',
+        15: 'fifteen',
+        16: 'sixteen',
+        17: 'seventeen',
+        18: 'eighteen',
+        19: 'nineteen'
+    }
+    dict_10x = {
+        2: 'twenty',
+        3: 'thirty',
+        4: 'forty',
+        5: 'fifty',
+        6: 'sixty',
+        7: 'seventy',
+        8: 'eighty',
+        9: 'ninety',
+        10: 'hundred'
+    }
+    dict_100x = dict_1x
+
+    # lengths
+    dict_1x_len = {k: len(v) for k, v in dict_1x.iteritems()}
+    dict_11_to_19_len = {k: len(v) for k, v in dict_11_to_19.iteritems()}
+    dict_10x_len = {k: len(v) for k, v in dict_10x.iteritems()}
+    dict_100x_len = dict_1x_len
+
+    totals = []
+    for i in xrange(1, end+1):
+        letters = []
+
+        hundreds = i // 100
+        tens = (i % 100) // 10
+        ones = (i % 100) % 10
+
+        if i >= 100:
+            if i % 100 == 0:
+                hundreds_extra = 7   # len('hundred')
+            else:
+                hundreds_extra = 10  # len('hundred' + 'and')
+            letters.append(dict_100x_len.get(hundreds, 0) + hundreds_extra)
+
+        # 11 - 19 case
+        if tens == 1:
+            letters.append(dict_11_to_19_len.get(ones+10, 0))
+        else:
+            letters.append(dict_10x_len.get(tens, 0))
+            letters.append(dict_1x_len.get(ones, 0))
+
+        totals.append(sum(letters))
+
+    return sum(totals)
 
 
 if __name__ == '__main__':
@@ -261,5 +336,6 @@ if __name__ == '__main__':
     # print large_sum(10)
     # print longest_collatz_sequence(ceil=1000000)
     # print lattice_paths(20)
-    print power_digit_sum(x=1000)
+    # print power_digit_sum(x=1000)
+    print number_letter_counts(end=1000)
     pass
