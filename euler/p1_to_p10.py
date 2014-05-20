@@ -12,23 +12,19 @@ from helpers import is_prime, is_prime_check_known, clockit
 
 def multiples_of_3_and_5(threshold=1000):
     """P1. Find the sum of multiples of 3 or 5 up to a threshold."""
-    return sum(i for i in xrange(1, threshold) if i % 3 == 0 or i % 5 == 0)
+    return sum(i for i in range(threshold) if i % 3 == 0 or i % 5 == 0)
 
 
-def even_fibonacci_numbers(threshold=4000000):
+def even_fibonacci_numbers(t=4000000):
     """P2. Finds sum of even valued fibonacci numbers."""
-    def make_fib_list(thresh):
-        fibs = [1]
-        i, x = 1, 2
-        while x <= thresh:
-            fibs.append(x)
-            i += 1
-            x = fibs[i-2] + fibs[i-1]
-        else:
-            return fibs
+    def fib_even(n):
+        a, b = 0, 1
+        while a < n:
+            if a % 2 == 0:
+                yield a
+            a, b = b, a + b
 
-    fib_list = make_fib_list(threshold)
-    return sum(e for e in fib_list if e % 2 == 0)
+    return sum(fib_even(t))
 
 
 def largest_prime_factor(n=600851475143):
@@ -74,14 +70,9 @@ def smallest_multiple(n=20):
     """P5. Finds smallest number evenly divisible by all numbers 1 to n."""
     def get_prime_factors(num):
         """Returns the prime factors for num."""
-        pf = []
-        # if num % 2 == 0:
-        #     pf.append(2)
         for i in xrange(2, num):
-            if num % i == 0:
-                if is_prime(i):
-                    pf.append(i)
-        return pf
+            if num % i == 0 and is_prime(i):
+                yield i
 
     def get_necessary_seq(num):
         """Finds the necessary numbers we need to check in a sequence."""
@@ -94,7 +85,7 @@ def smallest_multiple(n=20):
         """Returns a list of only prime factors from l (yes dupes allowed)."""
         factors = []
         for i in l:
-            pf = get_prime_factors(i)
+            pf = list(get_prime_factors(i))
             if pf:
                 factors.extend(pf)
             else:
@@ -108,23 +99,18 @@ def smallest_multiple(n=20):
 
 def sum_square_difference(c=100):
     """
-    P6. Finds the difference between the sum of squares the first c numbers and
-    the square of the sum.
+    P6. Finds the difference between the sum of squares and the square of the
+    sum of the first c numbers.
     """
     def sum_of_squares(x):
         """Computes the sum of the squares for the first x natural numbers."""
-        squares = []
-        [squares.append(i**2) for i in xrange(1, x+1)]
-        return sum(e for e in squares)
+        return sum(i**2 for i in xrange(1, x+1))
 
     def square_of_sum(x):
         """Computes the square of the sum of the first x natural numbers."""
-        sums = sum(i for i in xrange(1, x+1))
-        return sums**2
+        return sum(range(1, x+1)) ** 2
 
-    sum_part = sum_of_squares(c)
-    square_part = square_of_sum(c)
-    return square_part - sum_part
+    return square_of_sum(c) - sum_of_squares(c)
 
 
 def prime_10001st(x=10001):

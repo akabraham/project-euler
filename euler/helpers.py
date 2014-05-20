@@ -16,13 +16,18 @@ def clockit(func):
     return wrapper
 
 
-# def is_prime(n):
-#     """Returns True if n is a prime number."""
-#     return all(n % i for i in xrange(2, n))
+def generate_primes(n):
+    """Generates a sequence of primes up to n."""
+    for i in xrange(n + 1):
+        for j in xrange(2, int(sqrt(i)) + 1):
+            if i % j == 0:
+                break
+        else:
+            yield i
 
 
 def is_prime(n):
-    for i in xrange(2, int(sqrt(n))+1):
+    for i in xrange(2, int(sqrt(n)) + 1):
         if n % i == 0:
             return False
     else:
