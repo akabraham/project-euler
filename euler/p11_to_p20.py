@@ -2,7 +2,7 @@
 Project Euler solutions for p11 to p20.
 author: akabraham
 """
-from __future__ import unicode_literals
+from __future__ import unicode_literals, division
 
 import operator
 from collections import namedtuple
@@ -330,6 +330,47 @@ def number_letter_counts(end=1000):
     return sum(totals)
 
 
+def maximum_path_sum_1(triangle_str=None):
+    """
+    P18. Finds the maximum total from top to bottom of the given triangle.
+    # solution learned from http://blog.dreamshire.com/2009/04/project-euler-problem-18-solution/
+    """
+    if triangle_str is None:
+        triangle_str = """
+            75
+            95 64
+            17 47 82
+            18 35 87 10
+            20 04 82 47 65
+            19 01 23 75 03 34
+            88 02 77 73 07 63 67
+            99 65 04 28 06 16 70 92
+            41 41 26 56 83 40 80 70 33
+            41 48 72 33 47 32 37 16 94 29
+            53 71 44 65 25 43 91 52 97 51 14
+            70 11 33 28 77 73 17 78 39 68 17 57
+            91 71 52 38 17 14 91 43 58 50 27 29 48
+            63 66 04 68 89 53 67 30 73 16 69 87 40 31
+            04 62 98 27 23 09 70 98 73 93 38 53 60 04 23"""
+
+    def build_triangle(text):
+        """Converts a triangle text string into a double list."""
+        return [[int(v) for v in row.strip().split()] for row in
+                text.strip().split('\n')]
+
+    triangle = build_triangle(triangle_str)
+    # invert triangle into a funnel to solve more easily
+    funnel = triangle[::-1]
+
+    for j, row in enumerate(funnel[:-1]):
+        for i, num in enumerate(row[:-1]):
+            # add the max of the two adjacent numbers into next row's value
+            funnel[j+1][i] += max(num, row[i+1])
+
+    # by now, the bottom of funnel is the max sum
+    return funnel[-1][0]
+
+
 if __name__ == '__main__':
     # print largest_product_in_grid(c=4)
     # print highly_divisible_triangular_number(500)
@@ -337,5 +378,6 @@ if __name__ == '__main__':
     # print longest_collatz_sequence(ceil=1000000)
     # print lattice_paths(20)
     # print power_digit_sum(x=1000)
-    print number_letter_counts(end=1000)
+    # print number_letter_counts(end=1000)
+    print maximum_path_sum_1()
     pass

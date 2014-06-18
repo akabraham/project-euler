@@ -36,3 +36,13 @@ def test_power_digit_sum():
 def test_number_letter_counts():
     assert number_letter_counts(5) == 19
     assert number_letter_counts(1000) == 21120
+
+
+def test_maximum_path_sum_1():
+    triangle_str = """
+        3
+        7 5
+        2 4 6
+        8 5 9 3"""
+    assert maximum_path_sum_1(triangle_str) == 23
+    assert maximum_path_sum_1() == 1074

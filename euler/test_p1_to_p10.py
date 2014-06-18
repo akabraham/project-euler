@@ -10,8 +10,8 @@ def test_multiples_of_3_and_5():
 
 
 def test_even_fibonacci_numbers():
-    assert even_fibonacci_numbers(100) == 44
-    assert even_fibonacci_numbers(4000000) == 4613732
+    assert even_fibonacci_numbers(t=100) == 44
+    assert even_fibonacci_numbers(t=4000000) == 4613732
 
 
 @slow
