@@ -8,8 +8,6 @@ import operator
 from collections import namedtuple
 from math import sqrt, factorial
 
-from helpers import clockit
-
 
 def largest_product_in_grid(c=4, grid=None):
     """
@@ -295,7 +293,6 @@ def number_letter_counts(end=1000):
         9: 'ninety',
         10: 'hundred'
     }
-    dict_100x = dict_1x
 
     # lengths
     dict_1x_len = {k: len(v) for k, v in dict_1x.iteritems()}
@@ -330,6 +327,7 @@ def number_letter_counts(end=1000):
     return sum(totals)
 
 
+# FIXME: this is not the most efficient solution
 def maximum_path_sum_1(triangle_str=None):
     """
     P18. Finds the maximum total from top to bottom of the given triangle.
@@ -355,7 +353,7 @@ def maximum_path_sum_1(triangle_str=None):
 
     def build_triangle(text):
         """Converts a triangle text string into a double list."""
-        return [[int(v) for v in row.strip().split()] for row in
+        return [[int(v) for v in r.strip().split()] for r in
                 text.strip().split('\n')]
 
     triangle = build_triangle(triangle_str)
@@ -371,6 +369,12 @@ def maximum_path_sum_1(triangle_str=None):
     return funnel[-1][0]
 
 
+def counting_sundays():
+    """P19. Returns the number of Sundays that fell on the first of the month
+       during the 20th century."""
+    return True
+
+
 if __name__ == '__main__':
     # print largest_product_in_grid(c=4)
     # print highly_divisible_triangular_number(500)
@@ -379,5 +383,6 @@ if __name__ == '__main__':
     # print lattice_paths(20)
     # print power_digit_sum(x=1000)
     # print number_letter_counts(end=1000)
-    print maximum_path_sum_1()
+    # print maximum_path_sum_1()
+    print counting_sundays()
     pass
