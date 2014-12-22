@@ -12,8 +12,24 @@ def clockit(func):
         result = func(*args, **kwargs)
         t1 = time()
         return result, "{} --args={} --kwargs={} took {} s".format(
-            func.__name__, str(args), str(kwargs), t1-t0)
+            func.__name__, str(args), str(kwargs), t1 - t0)
+
     return wrapper
+
+
+def get_divisors(n):
+    from math import sqrt, ceil
+    if n <= 1:
+        return set()
+    elif n == 2:
+        return {1}
+
+    divisors = {1}
+    for i in xrange(2, int(ceil(sqrt(n))) + 1):
+        if n % i == 0:
+            divisors.add(i)
+            divisors.add(n // i)
+    return divisors
 
 
 def generate_primes(n):

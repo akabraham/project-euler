@@ -46,3 +46,13 @@ def test_maximum_path_sum_1():
         8 5 9 3"""
     assert maximum_path_sum_1(triangle_str) == 23
     assert maximum_path_sum_1() == 1074
+
+
+def test_counting_sundays():
+    assert counting_sundays(1999, 2000) == 2
+    assert counting_sundays(1901, 2000) == 171
+
+
+def test_factorial_digit_sum():
+    assert factorial_digit_sum(10) == 27
+    assert factorial_digit_sum(100) == 648

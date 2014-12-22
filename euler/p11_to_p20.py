@@ -369,10 +369,28 @@ def maximum_path_sum_1(triangle_str=None):
     return funnel[-1][0]
 
 
-def counting_sundays():
+def counting_sundays(start_yr=1901, end_yr=2000):
     """P19. Returns the number of Sundays that fell on the first of the month
        during the 20th century."""
-    return True
+    from datetime import datetime
+
+    cnt = 0
+    for yr in xrange(start_yr, end_yr + 1):
+        for month in xrange(1, 13):
+            dt = datetime(yr, month, 1)
+            # weekday 6 is a Sunday
+            if dt.weekday() == 6:
+                cnt += 1
+
+    return cnt
+
+
+def factorial_digit_sum(n=100):
+    """P20. Finds the sum of the digits representing the factorial 100!"""
+    from math import factorial
+
+    digits = factorial(n)
+    return sum(int(d) for d in str(digits))
 
 
 if __name__ == '__main__':
@@ -384,5 +402,6 @@ if __name__ == '__main__':
     # print power_digit_sum(x=1000)
     # print number_letter_counts(end=1000)
     # print maximum_path_sum_1()
-    print counting_sundays()
+    # print counting_sundays()
+    print factorial_digit_sum()
     pass
