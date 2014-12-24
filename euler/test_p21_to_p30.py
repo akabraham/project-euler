@@ -17,3 +17,11 @@ def test_amicable_numbers_1():
 
 def test_amicable_numbers():
     assert amicable_numbers(10000) == 31626
+
+
+def test_get_names_score():
+    assert get_name_score('COLIN', 938) == 49714
+
+
+def test_names_scores():
+    assert names_scores() == 871198282
