@@ -17,19 +17,28 @@ def clockit(func):
     return wrapper
 
 
-def get_divisors(n):
+def get_pdivisors(n):
+    """Returns the proper divisors of n."""
     from math import sqrt, ceil
     if n <= 1:
         return set()
     elif n == 2:
         return {1}
 
-    divisors = {1}
+    pdivisors = {1}
     for i in xrange(2, int(ceil(sqrt(n))) + 1):
         if n % i == 0:
-            divisors.add(i)
-            divisors.add(n // i)
-    return divisors
+            pdivisors.add(i)
+            pdivisors.add(n // i)
+    return pdivisors
+
+
+def get_fibs(n):
+    """Generator to get fibonacci numbers up to n."""
+    a, b = 0, 1
+    while n > b:
+        a, b = b, a + b
+        yield b
 
 
 def generate_primes(n):
