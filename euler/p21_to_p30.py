@@ -3,8 +3,9 @@ Project euler solutions for p21 to p30.
 author: akabraham
 """
 from __future__ import unicode_literals, division
-from helpers import get_pdivisors
+from helpers import get_pdivisors, generate_primes
 import itertools
+import math
 
 
 def is_amicable(a, b):
@@ -75,21 +76,39 @@ def x_digit_fibonacci_number(x=1000):
         return b
 
 
-# def reciprocal_cycles(x=1000):
-#     """P26. Finds the value of d < x for which 1/d contains the longest
-#     recurring cycle in its decimal fraction part."""
-#
-#
-# def quadratic_primes():
-#     """P27. """
-#
-#
-# def number_spiral_diagonals():
-#     """P28. """
-#     # up-right: y = (2x + 1)**2
-#     # down-left: y = 2x**2 + 1
-#     # down-right: y = 2x**2 - 2x + 1
-#     # up-left: y = 2x**2 + 2x + 1
+def reciprocal_cycles(lim=100):
+    """P26. Finds the value of d < x for which 1/d contains the longest
+    recurring cycle in its decimal fraction part."""
+    # http://en.wikipedia.org/wiki/Repeating_decimal#Decimal_expansion_and_recurrence_sequence
+    primes = list(generate_primes(lim))
+    repeating_parts = [int((10**(i - 1) - 1) / i) for i in primes]
+    lengths = [int(math.log10(x)) + 1 for x in repeating_parts]
+    # 10**k === 1 mod(n)
+    # (10 - 1) % n == 0
+    # 38 === 14 (mod 12)
+    # (38 - 14) % 12 == 0
+    # for p in primes:
+    #     if (10 - 1) % p == 0:
+    # This problem is more number theory and less coding. Skipping for now.
+    pass
+
+
+def number_spiral_diagonals(n=1001):
+    """P28. Finds the sum of the numbers on the diagonals in an n by n
+    spiral."""
+    # 3 diag: 4 * 3**2 - 2*1 * 1 - 2*1 * 2 - 2*1 * 3
+    # 5 diag: 4 * 5**2 - 2*2 * 1 - 2*2 * 2 - 2*2 * 3
+    # 7 diag: 4 * 7**2 - 2*3 * 1 - 2*3 * 2 - 2*3 * 3
+    # f(x) = 4 * x**2 - 6*2*(x-1)/2
+    #      = 4 * x**2 - 12*(x-1)/2
+    #      = 4 * (x**2 - 3*(x-1)/2)
+
+    def sum_at_diag(x):
+        """Returns the sum at the 4 corners of a diagonal of x length out."""
+        return 4 * (x**2 - 3 * (x-1) / 2)
+
+    diag_sums = sum(sum_at_diag(i) for i in xrange(3, n + 1, 2))
+    return int(diag_sums) + 1  # 1 = root value of spiral
 
 
 if __name__ == '__main__':
@@ -98,4 +117,6 @@ if __name__ == '__main__':
     # print non_abundant_sums()
     # print lexicographic_permutations()
     # print list(get_fibs(7))
-    print x_digit_fibonacci_number()
+    # print x_digit_fibonacci_number()
+    # print reciprocal_cycles()
+    print number_spiral_diagonals()

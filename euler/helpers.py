@@ -43,7 +43,7 @@ def get_fibs(n):
 
 def generate_primes(n):
     """Generates a sequence of primes up to n."""
-    for i in xrange(n + 1):
+    for i in xrange(2, n + 1):
         for j in xrange(2, int(sqrt(i)) + 1):
             if i % j == 0:
                 break
