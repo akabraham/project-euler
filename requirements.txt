@@ -1,4 +1,4 @@
-ipdb==0.8
-ipython==2.3.1
-pep8==1.5.7
-pytest==2.6.4
+ipdb
+ipython
+pep8
+pytest
